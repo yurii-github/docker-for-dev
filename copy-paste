@@ -1,0 +1,228 @@
+REMOVE ALL CONTAINERS
+
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+
+
+ $ sudo apt-get update
+ $ sudo apt-get install apt-transport-https ca-certificates
+ 
+  sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+  sudo nano /etc/apt/sources.list.d/docker.list
+   --> deb https://apt.dockerproject.org/repo ubuntu-xenial main
+   
+sudo apt-get update
+
+sudo apt-get purge lxc-docker
+apt-cache policy docker-engine
+ sudo apt-get install docker-engine
+ sudo service docker start
+ sudo docker run hello-world
+ 
+ 
+ /etc/network/interfaces
+   --> dns-nameservers X.X.X.X Y.Y.Y.Y Z.Z.Z.Z
+   sudo ifdown eth0 && sudo ifup eth0
+   
+   
+   
+   
+   
+   $ sudo groupadd docker
+   $ sudo usermod -aG docker $USER
+   
+   
+   $ docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done"
+   $ docker ps
+   $ docker logs insane_babbage
+   $ docker stop insane_babbage
+   
+   $ docker run -d -P training/webapp python app.py
+   
+   docker ps -a (all) -l(last)
+   
+   $ docker run -d -p 80:5000 training/webapp python app.py
+   map 5000 port in container to 80 port on host
+   
+   $ docker port nostalgic_morse 5000
+   
+   docker logs -f(tail) nostalgic_morse
+   
+   $ docker top nostalgic_morse
+   processes inside
+   
+   $ docker inspect nostalgic_morse
+   
+   $ docker rm nostalgic_morse
+   
+   
+   
+   $ docker images
+   
+   $ docker pull centos
+   
+   $ docker run -t -i training/sinatra /bin/bash
+   $ docker commit -m "Added json gem" -a "Kate Smith" \
+0b2616b0e5a8 ouruser/sinatra:v2
+
+
+DockerFile
+# This is a comment
+FROM ubuntu:14.04
+MAINTAINER Kate Smith <ksmith@example.com>
+RUN apt-get update && apt-get install -y ruby ruby-dev
+RUN gem install sinatra
+
+
+
+$ docker build -t ouruser/sinatra:v2 .
+   
+   
+   
+   
+   docker images --digests | head
+
+   docker push 
+   
+   $ docker rmi training/sinatra
+   
+   
+   
+   
+   
+   
+   
+   NAME CONTAINER
+   
+   $ docker run -d -P --name web training/webapp python app.py
+   
+   docker network ls
+   
+   
+   $ docker run -itd --name=networktest ubuntu
+   
+   bridge (is defult)
+   docker network inspect bridge
+   $ docker network disconnect bridge networktest
+   
+   $ docker network create -d bridge my-bridge-network
+   
+   docker run -d --network=my-bridge-network --name db training/postgres
+   $ docker inspect --format='{{json .NetworkSettings.Networks}}'  db
+   
+$ docker exec -it db bash
+$ docker network connect my-bridge-network web
+   
+   
+   
+   
+   
+   
+   DATA CONTAINERS
+   -v (add container)
+   VOLUME (in dockerfile)
+   $ docker run -d -P --name web -v /webapp training/webapp python app.py
+   
+   mount from HOST /src/webapp
+   $ docker run -d -P --name web -v /src/webapp:/opt/webapp training/webapp python app.py
+   
+   docker run -v /Users/<path>:/<container path> ...
+   
+   set read-only
+   $ docker run -d -P --name web -v /src/webapp:/opt/webapp:ro training/webapp python app.py
+   
+   :z (change FS labels)
+   
+   mount single file as volume
+   $ docker run --rm -it -v ~/.bash_history:/root/.bash_history ubuntu /bin/bash
+   
+   
+   
+   Creating and mounting a data volume container
+   $ docker create -v /dbdata --name dbstore training/postgres /bin/true
+   $ docker run -d --volumes-from dbstore --name db1 training/postgres
+   $ docker run -d --volumes-from dbstore --name db2 training/postgres
+   
+   
+   remove volume
+   docker rm -v
+   
+   find unused volumes
+   docker volume ls -f dangling=true
+   docker volume rm <volume name
+   
+   
+   
+   $ docker run --rm -v /foo -v awesome:/bar busybox top
+   
+   
+   
+   COMPOSE CONTAINERS
+   Dockerfile &  docker-compose.yml 
+   sudo apt-get install docker-compose ?????!!
+
+   
+   # curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+   # chmod +x /usr/local/bin/docker-compose
+   # curl -L https://raw.githubusercontent.com/docker/compose/$(docker-compose version --short)/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose
+   reboot/relogin
+   
+       $ docker-compose up -d
+	       $ docker-compose stop
+	   
+   https://github.com/docker/compose
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   ===========================
+   
+   
+   #    entrypoint: /entrypoint.sh#
+#    volumes:
+#      - ./entrypoint.sh:/entrypoint.sh
+/*
+  mysql: # https://github.com/docker-library/docs/tree/master/mysql#mysql_database
+    container_name: mysql56
+    image: mysql:5.6.32
+    ports:
+      - 3306:3306
+    environment:
+      #- MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - MYSQL_DATABASE=db1
+*/
+
+
+  web:
+    image: php:5.6.25-apache
+    container_name: php56_apache
+    command: pecl install xdebug
+    command: docker-php-ext-enable xdebug
+    command: apache2-foreground
+    # command: apt-get update
+    # command: apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libmcrypt-dev libpng12-dev
+    # command: docker-php-ext-install pdo_mysql
+#    depends_on:
+#      - mysql
+#    links:
+#      - mysql:localhost
+    volumes:
+      - /home/yurii/www:/var/www/html
+    ports:
+      - 80:80
+	  
+	  
+	  
+	  
+	  zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20131226/xdebug.so
