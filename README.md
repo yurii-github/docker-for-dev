@@ -38,6 +38,7 @@ services:
       - /home/yurii/MyWebApps:/var/www/html
     ports:
       - 80:80
+      - 443:443
       - 9000:9000
     network_mode: "host"
 ```
