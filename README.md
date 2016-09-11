@@ -12,7 +12,7 @@ Currently 2 images are available.
 
 Config example how to use images as developer machine with docker-compose
 
-*docker-compose.yml*
+#### docker-compose.yml
 
 ```yml
 version: '2'
@@ -42,3 +42,7 @@ services:
       - 9000:9000
     network_mode: "host"
 ```
+
+#### NOTE
+
+you cannot use *localhost* for database connection in PHP, because PDO uses ALWAYS socket with localhost. Use *127.0.0.1* instead
