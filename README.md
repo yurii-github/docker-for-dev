@@ -1,14 +1,18 @@
 # My docker images
 
-Dockerfiles (and other configs) for each image are located in its own branch
-
-So far images that you can build:
-
-* PHP developer: PHP5.6 + Xdebug + Apache + PHPUnit + htop + man + wget
+Each image (with its dockerfile, config files etc..) is located in its own branch at this repository.  
+Currently 2 images are available.
 
 
-docker-compose.yml example
+| Base Image     | Image                                | Role           | Entrypoint     | Ports              |  Applications  |
+|----------------| -------------------------------------|----------------|:--------------:|--------------------|------:|
+| ubuntu:16.04   | yurii2017/docker-images:php56_apache | PHP Developer  | supervisord    | 80<br>443<br>9000  | PH 5.6 (source)<br>Xdebug (source)<br>PHPUnit (lastest)<br>Apache 2.4<br>htop<br>man<br>wget<br>nano |
+| mysql:5.6      | yurii2017/docker-images:mysql56      | MySQL Server   | supervisord    | 3306               | MySQL Server 5.6 |
 
+
+Config example how to use images as developer machine with docker-compose
+
+*docker-compose.yml*
 
 ```yml
 version: '2'
