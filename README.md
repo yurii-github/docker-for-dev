@@ -6,7 +6,7 @@ Currently 2 images are available.
 
 | Base Image     | Image                                | Role           | Entrypoint     | Ports              |  Applications  |
 |----------------| -------------------------------------|----------------|:--------------:|--------------------|------:|
-| ubuntu:16.04   | [yurii2017/docker-images:php56_apache](https://github.com/yurii-github/docker-images/tree/php56_apache) <br><br> [![](https://images.microbadger.com/badges/image/yurii2017/docker-images:php56_apache.svg)](http://microbadger.com/images/yurii2017/docker-images:php56_apache "Get your own image badge on microbadger.com")  | PHP Developer  | supervisord    | 80<br>443<br>9000  | PH 5.6 (source)<br>Xdebug (source)<br>PHPUnit (lastest)<br>Apache 2.4<br>htop<br>man<br>wget<br>nano |
+| ubuntu:16.04   | [yurii2017/docker-images:php56_apache](https://github.com/yurii-github/docker-images/tree/php56_apache) <br><br> [![](https://images.microbadger.com/badges/image/yurii2017/docker-images:php56_apache.svg)](http://microbadger.com/images/yurii2017/docker-images:php56_apache "Get your own image badge on microbadger.com")  | PHP Developer  | supervisord    | 80<br>443<br>9000  | PHP 5.6(source)<br>Xdebug(source)<br>PHPUnit(lastest)<br>Apache 2.4<br>htop<br>man<br>wget<br>nano<br>dos2unix<br>iputils-ping<br>man<br>mysql-client<br>git<br>drush (dev)<br>composer(snapshot) |
 | mysql:5.6      | [yurii2017/docker-images:mysql56](https://github.com/yurii-github/docker-images/tree/mysql56) <br><br>[![](https://images.microbadger.com/badges/image/yurii2017/docker-images:mysql56.svg)](http://microbadger.com/images/yurii2017/docker-images:mysql56 "Get your own image badge on microbadger.com")     | MySQL Server   | supervisord    | 3306               | MySQL 5.6 |
 
 
