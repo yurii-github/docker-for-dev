@@ -1,0 +1,4 @@
+#
+# Nginx
+#
+FROM nginx

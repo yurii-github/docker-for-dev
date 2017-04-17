@@ -1,0 +1,41 @@
+#
+#  setup with PHP and Nginx
+#
+#  Yurii K. (c) 09.04.2017
+#
+# HOST:CONTAINER
+#
+version: "3"
+services:
+  #
+  #
+  nginx:
+    image: nginx # https://hub.docker.com/_/nginx/
+    restart: always
+    domainname: phpdev_nginx.docker
+    container_name: phpdev_nginx
+    working_dir: /var/www
+    links:
+      - php
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      #- xxx:/usr/share/nginx/html
+      - /home/yurii/WebApplications/:/var/www
+      - ./config/test.local.conf:/etc/nginx/conf.d/test.local.conf
+      - ./config/blog.local.conf:/etc/nginx/conf.d/blog.local.conf
+  #
+  #
+  php:
+    build:
+      context: ./images/php-7.1-fpm
+    restart: always
+    domainname: phpdev_php.docker
+    container_name: phpdev_php
+    working_dir: /var/www
+    volumes:
+      - /home/yurii/WebApplications/:/var/www
+
+      
+    
