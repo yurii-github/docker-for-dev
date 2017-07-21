@@ -10,7 +10,9 @@ services:
   #
   #
   nginx:
-    image: nginx # https://hub.docker.com/_/nginx/
+# image: nginx # https://hub.docker.com/_/nginx/
+    build:
+      context: ./images/nginx
     restart: always
     domainname: phpdev_nginx.docker
     container_name: phpdev_nginx
@@ -21,10 +23,11 @@ services:
       - 80:80
       - 443:443
     volumes:
+      # HOST : CONTAINER
       #- xxx:/usr/share/nginx/html
       - /home/yurii/WebApplications/:/var/www
       - ./config/test.local.conf:/etc/nginx/conf.d/test.local.conf
-      - ./config/blog.local.conf:/etc/nginx/conf.d/blog.local.conf
+      - ./config/myblog.local.conf:/etc/nginx/conf.d/myblog.local.conf
   #
   #
   php:
